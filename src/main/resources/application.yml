@@ -1,0 +1,49 @@
+server:
+  port:  8080
+
+spring:
+  datasource:
+    # 使用 Druid 数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 数据库连接配置
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 路径
+    url: jdbc:mysql://localhost:3306/listdemo?useSSL=false&serverTimezone=UTC
+    # 账号
+    username: root
+    # 密码
+    password: root
+    # Druid 配置
+    druid:
+      # 初始化连接数
+      initial-size: 5
+      # 最小连接数
+      min-idle: 5
+      # 最大连接数
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      # 测试连接是否有效
+      validation-query: SELECT 1 FROM DUAL
+      # 开启连接验证
+      test-while-idle: true
+      # 开启连接池对连接创建时的验证
+      test-on-borrow: true
+      # 关闭连接时验证
+      test-on-return: true
+      # 监控统计拦截器
+      stat-filter:
+        enabled: true
+      # 监控WebStatFilter
+      web-stat-filter:
+        enabled: true
+      # 监控页面地址
+      monitor-servlet-url: /druid/*
+      # 配置监控管理后台的用户名和密码
+      login-username: admin
+      login-password: admin
+
