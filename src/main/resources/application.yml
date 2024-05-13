@@ -8,7 +8,7 @@ spring:
     # 数据库连接配置
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 路径
-    url: jdbc:mysql://localhost:3306/listdemo?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/listdemo?useUnicode=true&characterEncoding=utf8
     # 账号
     username: root
     # 密码
@@ -47,3 +47,14 @@ spring:
       login-username: admin
       login-password: admin
 
+# MyBatis-Plus 配置
+    # application.yml
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    cache-enabled: true
+  global-config:
+    db-config:
+      id-type: AUTO
+  mapper-locations: classpath*:mapper/*Mapper.xml

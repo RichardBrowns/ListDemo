@@ -1,11 +1,19 @@
 package org.example.listdemo.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Insert;
 import org.example.listdemo.entity.User;
+import org.springframework.stereotype.Repository;
 
+/**
+ * @projectName: UserMapper
+ * @Description: User实体类对应的mapper类
+ * @author: LiDa
+ * @createTime: 2024/5/13 10:00
+ * @version: 1.0
+ */
 
-public interface UserMapper {
-    @Insert("INSERT INTO public.users (username, password, first_name, last_name, email, birth_date, gender) "
-            + "VALUES (#{username}, #{password}, #{firstName}, #{lastName}, #{email}, #{birthDate}, #{gender})")
-    int insertUser(User user);
+@Repository
+public interface UserMapper extends BaseMapper<User> {
+
 }
