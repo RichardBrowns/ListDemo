@@ -1,7 +1,10 @@
 package org.example.listdemo.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.example.listdemo.dto.UserDTO;
 import org.example.listdemo.entity.User;
+
+import java.util.List;
 
 /**
  * @projectName: UserService
@@ -12,5 +15,5 @@ import org.example.listdemo.entity.User;
  */
 
 public interface UserService extends IService<User> {
-
+    public List<UserDTO> getUserList();
 }
