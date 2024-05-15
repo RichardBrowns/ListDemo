@@ -141,7 +141,6 @@ public class UserController {
         }
         try {
             Boolean isSuccess = userService.save(user);
-            log.info("添加用户成功");
             return ResultData.success(ResultData.SUCCESS, "添加用户成功", isSuccess);
         } catch (Exception e) {
             log.error("添加用户失败：", e.getMessage());
@@ -165,7 +164,6 @@ public class UserController {
         }
         try {
             Boolean isSuccess = userService.removeById(id);
-            log.info("删除用户成功");
             return ResultData.success(ResultData.SUCCESS, "删除用户成功", isSuccess);
         } catch (Exception e) {
             log.error("删除用户失败：", e.getMessage());
