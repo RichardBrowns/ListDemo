@@ -105,28 +105,6 @@ public class UserController {
 
     /**
      * @Authod LiDa
-     * @Date 2024/5/14 13:55
-     * @Method getUserTotal
-     * @Description 查询用户总数
-     * @Param
-     * @Return
-     */
-    @GetMapping("/total")
-    public ResultData<Integer> getUserTotal() {
-        try {
-            Integer total = userService.count();
-            if (total == null) {
-                return ResultData.failure(ResultData.NOT_FOUND, "查询用户总数失败");
-            }
-            return ResultData.success(ResultData.SUCCESS, "查询用户成功", total);
-        } catch (Exception e) {
-            log.error("查询用户失败：未知错误", e);
-            return ResultData.failure(ResultData.ERROR, "查询用户失败：未知错误");
-        }
-    }
-
-    /**
-     * @Authod LiDa
      * @Date 2024/5/14 17:52
      * @Method addUser
      * @Description 添加用户信息
@@ -168,6 +146,28 @@ public class UserController {
         } catch (Exception e) {
             log.error("删除用户失败：", e.getMessage());
             return ResultData.failure(ResultData.ERROR, "删除用户失败");
+        }
+    }
+
+    /**
+     * @Authod LiDa
+     * @Date 2024/5/14 13:55
+     * @Method getUserTotal
+     * @Description 查询用户总数
+     * @Param
+     * @Return
+     */
+    @GetMapping("/total")
+    public ResultData<Integer> getUserTotal() {
+        try {
+            Integer total = userService.count();
+            if (total == null) {
+                return ResultData.failure(ResultData.NOT_FOUND, "查询用户总数失败");
+            }
+            return ResultData.success(ResultData.SUCCESS, "查询用户成功", total);
+        } catch (Exception e) {
+            log.error("查询用户失败：未知错误", e);
+            return ResultData.failure(ResultData.ERROR, "查询用户失败：未知错误");
         }
     }
 }
