@@ -1,5 +1,6 @@
 package org.example.listdemo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.example.listdemo.dto.UserDTO;
 import org.example.listdemo.entity.User;
@@ -15,5 +16,7 @@ import java.util.List;
  */
 
 public interface UserService extends IService<User> {
-    public List<UserDTO> getUserList();
+    public List<UserDTO> getUserList(Integer currentPage, Integer pageSize);
+
+    public List<UserDTO> getUserByCondition(Character gender, String username, Integer currentPage, Integer pageSize);
 }

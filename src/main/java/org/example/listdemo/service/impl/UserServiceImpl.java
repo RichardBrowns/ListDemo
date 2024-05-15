@@ -1,5 +1,8 @@
 package org.example.listdemo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.example.listdemo.dto.UserDTO;
 import org.example.listdemo.entity.User;
@@ -7,10 +10,9 @@ import org.example.listdemo.mapper.UserMapper;
 import org.example.listdemo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    @Autowired
+    private UserMapper userMapper;
+
     /**
      * @Authod LiDa
      * @Date 2024/5/14 10:05
@@ -36,15 +41,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @Return
      */
     @Override
-    public List<UserDTO> getUserList() {
-        List<User> userList = this.list();
+    public List<UserDTO> getUserList(Integer currentPage, Integer pageSize) {
+        Page<User> page = new Page<>(currentPage, pageSize);
+        List<User> userList = userMapper.selectPage(page, null).getRecords();
         if (userList == null) {
             return null;
         }
         // 使用Stream API进行列表转换，提高代码的可读性和简洁性
         return userList.stream()
-                .map(user -> convertUserToUserDTO(user))
+                .map(this::convertUserToUserDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> getUserByCondition(Character gender, String username, Integer currentPage, Integer pageSize) {
+        Page<User> page = new Page<>(currentPage, pageSize);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        if (gender != null) {
+            queryWrapper.eq("gender", gender);
+        }
+        queryWrapper.like("username", username);
+        List<User> userList = userMapper.selectPage(page, queryWrapper).getRecords();
+        if (userList != null) {
+            return userList.stream()
+                    .map(this::convertUserToUserDTO)
+                    .collect(Collectors.toList());
+        }
+        return null;
     }
 
     /**
@@ -56,21 +79,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      */
     private UserDTO convertUserToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
-//        // 通过反射自动处理属性复制，减少代码重复
-//        // 注意：实际应用中应避免暴露敏感字段，这里假设密码字段不被复制
-//        Class<?> clazz = user.getClass();
-//        for (Field field : clazz.getDeclaredFields()) {
-//            field.setAccessible(true);
-//            if (!"password".equals(field.getName())) { // 避免复制密码字段
-//                try {
-//                    Object value = field.get(user);
-//                    System.out.println(userDTO);
-////                    field.set(userDTO, value);
-//                } catch (IllegalAccessException e) {
-//                    logger.error("反射属性复制失败",e.getMessage());
-//                    e.printStackTrace();
-//                }
-//            }
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setFirstName(user.getFirstName());

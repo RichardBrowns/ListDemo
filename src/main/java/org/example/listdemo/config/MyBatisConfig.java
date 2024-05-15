@@ -16,4 +16,5 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan("org.example.listdemo.mapper") // 同样指定Mapper接口所在的包路径
 public class MyBatisConfig {
+
 }
