@@ -16,16 +16,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @createTime: 2024/5/14 10:49
  * @version: 1.0
  */
-@Configuration
+//@Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*") // 允许所有来源
-                .allowedMethods("*") // 允许所有HTTP方法
-                .allowedHeaders("*") // 允许所有头部
-                .allowCredentials(true) // 允许携带Cookie
-                .maxAge(3600); // 缓存预检请求的过期时间
+        registry.addMapping("/**") // 对所有请求都应用CORS
+                .allowedOrigins("http://localhost:2024") // 替换为你的实际允许的源
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*") // 可以根据需要调整允许的头部
+                .allowCredentials(true); // 保持允许凭证
     }
 }
 

@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
         data.put("errorCode", ex.getErrorCode());
         data.put("additionalData", ex.getAdditionalData());
 
-        log.error("An exception occurred: {}", ex.getMessage());
+        log.error("An MyException occurred: {}", ex.getMessage());
 
         return ResultData.failure(ex.getErrorCode(), data);
     }
@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         data.put("message", "An unexpected error occurred");
         data.put("stackTrace", ex.getStackTrace().toString());
 
-        log.error("An exception occurred: {}", ex.getMessage());
+        log.error("An Exception occurred: {}", ex.getMessage());
 
         return ResultData.failure(ResultData.ERROR, data);
     }
