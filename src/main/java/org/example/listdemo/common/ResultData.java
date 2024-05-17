@@ -23,32 +23,29 @@ public class ResultData<T> {
     public static final int PARAMS_ERROR = 400; // 参数错误
     public static final int NOT_FOUND = 404; // 资源未找到
 
+    public ResultData() {
+    }
+
+    public ResultData(int code, T data) {
+        this.code = code;
+        this.data = data;
+    }
+
     public ResultData(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public ResultData(String message, T data) {
-        this.message = message;
-        this.data = data;
-    }
-
-    // 静态方法：创建成功的结果数据
     public static <T> ResultData<T> success(int code, String message, T data) {
         return new ResultData<>(code, message, data);
     }
 
-    public static <T> ResultData<T> success(String message, T data) {
-        return new ResultData<>(message, data);
-    }
-
-    // 静态方法：创建失败的结果数据
     public static <T> ResultData<T> failure(int code, String message) {
         return new ResultData<>(code, message, null);
     }
 
-    public static <T> ResultData<T> failure(String message) {
-        return new ResultData<>(message, null);
+    public static <T> ResultData<T> failure(int code,T data) {
+        return new ResultData<>(code, data);
     }
 }

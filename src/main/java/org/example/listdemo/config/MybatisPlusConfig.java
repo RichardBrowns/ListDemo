@@ -1,11 +1,13 @@
 package org.example.listdemo.config;
 
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @description:
+ * @description: MybatisPlus配置
  * @projectName: ListDemo
  * @packageName: org.example.listdemo.config
  * @author: LiDa
@@ -14,11 +16,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MybatisPlusConfig {
+    /**
+     * 创建并返回一个分页拦截器
+     * @return
+     */
     @Bean
-    public PaginationInterceptor paginationInterceptor() {
-        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        // 可以根据需求调整分页插件的配置
-        // paginationInterceptor.setDialectType(DialectType.MYSQL);
-        return paginationInterceptor;
+    public MybatisPlusInterceptor createPaginationInterceptor() {
+        return new MybatisPlusInterceptor();
     }
 }

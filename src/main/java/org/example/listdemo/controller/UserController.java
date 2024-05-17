@@ -20,12 +20,10 @@ import java.util.List;
  * @createTime: 2024/5/13 10:02
  * @version: 1.0
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
     @Autowired
     private UserService userService;
 
@@ -40,16 +38,11 @@ public class UserController {
     @GetMapping("/list")
     public ResultData<List<UserDTO>> getUserList(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                  @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        try {
-            List<UserDTO> userList = userService.getUserList(page, size);
-            if (userList == null) {
-                return ResultData.failure(ResultData.NOT_FOUND, "查询用户失败：用户列表为空");
-            }
-            return ResultData.success(ResultData.SUCCESS, "查询用户成功", userList);
-        } catch (Exception e) {
-            log.error("查询用户失败：未知错误", e);
-            return ResultData.failure(ResultData.ERROR, "查询用户失败：未知错误");
+        List<UserDTO> userList = userService.getUserList(page, size);
+        if (userList == null) {
+            return ResultData.failure(ResultData.NOT_FOUND, "查询用户失败：用户列表为空");
         }
+        return ResultData.success(ResultData.SUCCESS, "查询用户成功", userList);
     }
 
     /**
@@ -65,16 +58,11 @@ public class UserController {
                                                         @RequestParam(value = "username", defaultValue = "") String username,
                                                         @RequestParam(value = "page", defaultValue = "1") Integer page,
                                                         @RequestParam(value = "size", defaultValue = "10") Integer size) {
-        try {
-            List<UserDTO> userList = userService.getUserByCondition(gender, username, page, size);
-            if (userList == null) {
-                return ResultData.failure(ResultData.NOT_FOUND, "条件查询用户失败：用户列表为空");
-            }
-            return ResultData.success(ResultData.SUCCESS, "条件查询用户成功", userList);
-        } catch (Exception e) {
-            log.error("条件查询用户失败：未知错误", e);
-            return ResultData.failure(ResultData.ERROR, "条件查询用户失败：未知错误");
+        List<UserDTO> userList = userService.getUserByCondition(gender, username, page, size);
+        if (userList == null) {
+            return ResultData.failure(ResultData.NOT_FOUND, "条件查询用户失败：用户列表为空");
         }
+        return ResultData.success(ResultData.SUCCESS, "条件查询用户成功", userList);
     }
 
     /**
@@ -91,16 +79,11 @@ public class UserController {
             log.info("提供的用户信息为空");
             return ResultData.failure(ResultData.PARAMS_ERROR, "提供的用户信息为空");
         }
-        try {
-            boolean result = userService.updateById(user);
-            if (!result) {
-                return ResultData.failure(ResultData.ERROR, "更新用户失败");
-            }
-            return ResultData.success(ResultData.SUCCESS, "更新用户成功", result);
-        } catch (Exception e) {
-            log.error("更新用户失败：未知错误", e);
-            return ResultData.failure(ResultData.ERROR, "更新用户失败：未知错误");
+        boolean result = userService.updateById(user);
+        if (!result) {
+            return ResultData.failure(ResultData.ERROR, "更新用户失败");
         }
+        return ResultData.success(ResultData.SUCCESS, "更新用户成功", result);
     }
 
     /**
@@ -117,13 +100,8 @@ public class UserController {
             log.info("提供的用户信息为空");
             return ResultData.failure(ResultData.PARAMS_ERROR, "提供的用户信息为空");
         }
-        try {
-            Boolean isSuccess = userService.save(user);
-            return ResultData.success(ResultData.SUCCESS, "添加用户成功", isSuccess);
-        } catch (Exception e) {
-            log.error("添加用户失败：", e.getMessage());
-            return ResultData.failure(ResultData.ERROR, "添加用户失败");
-        }
+        Boolean isSuccess = userService.save(user);
+        return ResultData.success(ResultData.SUCCESS, "添加用户成功", isSuccess);
     }
 
     /**
@@ -140,13 +118,8 @@ public class UserController {
             log.info("提供的用户id为空");
             return ResultData.failure(ResultData.PARAMS_ERROR, "提供的用户id为空");
         }
-        try {
-            Boolean isSuccess = userService.removeById(id);
-            return ResultData.success(ResultData.SUCCESS, "删除用户成功", isSuccess);
-        } catch (Exception e) {
-            log.error("删除用户失败：", e.getMessage());
-            return ResultData.failure(ResultData.ERROR, "删除用户失败");
-        }
+        Boolean isSuccess = userService.removeById(id);
+        return ResultData.success(ResultData.SUCCESS, "删除用户成功", isSuccess);
     }
 
     /**
@@ -159,15 +132,10 @@ public class UserController {
      */
     @GetMapping("/total")
     public ResultData<Integer> getUserTotal() {
-        try {
-            Integer total = userService.count();
-            if (total == null) {
-                return ResultData.failure(ResultData.NOT_FOUND, "查询用户总数失败");
-            }
-            return ResultData.success(ResultData.SUCCESS, "查询用户成功", total);
-        } catch (Exception e) {
-            log.error("查询用户失败：未知错误", e);
-            return ResultData.failure(ResultData.ERROR, "查询用户失败：未知错误");
+        Integer total = userService.count();
+        if (total == null) {
+            return ResultData.failure(ResultData.NOT_FOUND, "查询用户总数失败");
         }
+        return ResultData.success(ResultData.SUCCESS, "查询用户成功", total);
     }
 }
