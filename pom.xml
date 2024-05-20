@@ -25,6 +25,20 @@
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <druid-version>1.2.8</druid-version>
         <mysql-version>8.0.28</mysql-version>
+
+        <!-- SonarQube扫描配置 -->
+        <sonar.sources>src/main/java</sonar.sources>
+        <sonar.tests>src/test/java</sonar.tests>
+        <!-- 排除特定路径的代码覆盖率计算 -->
+        <sonar.coverage.exclusions>
+            **/org/example/listdemo/common/**,
+            **/org/example/listdemo/config/**,
+            **/org/example/listdemo/dto/**,
+            **/org/example/listdemo/entity/**,
+            **/org/example/listdemo/exception/**,
+            **/org/example/listdemo/utils/**,
+            **/org/example/listdemo/Application.java
+        </sonar.coverage.exclusions>
     </properties>
 
     <dependencies>
@@ -58,6 +72,36 @@
             <scope>test</scope>
         </dependency>
 
+        <!--测试用例-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -70,10 +114,10 @@
             <version>${mybatis-plus.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-security</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
+        <!--        </dependency>-->
 
         <!--Redis 依赖-->
         <dependency>
@@ -135,6 +179,12 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>3.9.0.2155</version>
             </plugin>
         </plugins>
     </build>
